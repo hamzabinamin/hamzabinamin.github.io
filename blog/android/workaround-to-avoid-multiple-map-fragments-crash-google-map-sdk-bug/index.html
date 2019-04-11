@@ -132,30 +132,26 @@ if (!doNotTrack) {
           <article class="entry-content">
             
 
-<p>One of my recent site builds came back from a round of QA with a bug present only on mobile iOS devices. It was a set of tab links that required two clicks to function on  iPhones and iPads.</p>
+<p>If you have ever tried to place more than one map fragment in a view pager contained inside a parent fragment to form a tab layout. You must have encountered a random crash in your app. The crash log will look something like the following: </p>
+
+<pre><code class="language-scss">
+    E/AndroidRuntime﹕ FATAL EXCEPTION: GLThread 9994
+    java.lang.NullPointerException: Attempt to get length of null array
+      at java.nio.DirectByteBuffer.put(DirectByteBuffer.java:385)
+      at java.nio.ByteBufferAsIntBuffer.put(ByteBufferAsIntBuffer.java:160)
+      at com.google.maps.api.android.lib6.gmm6.o.c.a.k.e(Unknown Source)
+</code></pre>
+
+<p>The crash also seems to happen randomly and not all the time. It might get triggered at a certain location or coordinates and you would end up scrathing your head, what's causing it. Apparently even Google is aware of this and the bug is being tracked <a href="https://code.google.com/p/gmaps-api-issues/issues/detail?id=5100#c34">here.</a> The bug has existed since the Lolipop days and still occurs on newer versions. I myself have faced the bug in Android Nougat and Pie.</p>
+
+<p>I have tried a number of solutions that have been listed on sites like StackOverflow but none of them seemed to help in my case. It was really frustrating to figure out if a solution did actually work, because at times I would thing the app has stopped crashing but on the 9th or 10th launch it would crash again. I started to think differently and instead of fixing the bug itself I thought of catching the crash? How did I do that? Well let's find out</p>
 
 <h2 id="the-bug:b39712958d960991129b3d3f48959e79">The Bug</h2>
 
-<p>The buggy tab links had an effect that added a pseudo element to the right of each link indicating when a link was hovered over, in focus, or active. These tab links worked as just as expected on Chrome, Firefox, and desktop Safari: one single click would activate and display a new tab panel.</p>
-
-<pre><code class="language-scss">a {
-  &amp;:hover {
-    &amp;::after {
-      content: &quot; pseudo element&quot;;
-    }
-  }
-}
-</code></pre>
-
-<h2 id="the-problem:b39712958d960991129b3d3f48959e79">The Problem</h2>
-
-<p>However, the tab links didn&rsquo;t work correctly on the iPhone and iPad. When clicked, the pseudo element displayed next to the link but the tab panel did not change until it was followed up with a second link.</p>
-
-<p>A quick investigation brought me to a <a href="https://css-tricks.com/annoying-mobile-double-tap-link-issue/">CSS-Tricks article by Chris Coyer</a> that discussed the bug I was experiencing. I wasn&rsquo;t quite sure until this moment how the pseudo element was breaking my tab links. It seems that on Safari mobile, the first click triggers the hover state and the second click  triggers the link click.</p>
-
 <h2 id="the-solution:b39712958d960991129b3d3f48959e79">The Solution</h2>
 
-<p>Since the design necessitated a hover state, I had to keep reading until I found a <a href="https://css-tricks.com/annoying-mobile-double-tap-link-issue/#comment-1604517">solution in the comments</a>.</p>
+<p>Most of the programmers will be familiar with the <code>try-catch</code> terminology. The <code>try</code> statement allows you to define a block of code to be tested for errors while it is being executed. And the <code>catch</code> statement allows you to define a block of code to be executed, if an error occurs in the try block. According to the crash log, the crash is due to a <code>NullPointerException</code> and it occurs on the <code>GLThread</code>. What we need to do is to override the default uncaught exception handler so that we can suppress crashing the app when this certain exception occurs. </p>
+
 
 <blockquote>
 <p>This double-click situation happens only when an element inside the link changes from display none to another value of display on hover. An easy workaround is to use any other way of hiding/revealing this element (opacity, visibility, position…) instead of display none.</p>
