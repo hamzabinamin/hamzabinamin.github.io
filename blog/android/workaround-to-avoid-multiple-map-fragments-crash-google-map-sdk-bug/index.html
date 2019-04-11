@@ -134,47 +134,89 @@ if (!doNotTrack) {
 
 <p>If you have ever tried to place more than one map fragment in a view pager contained inside a parent fragment to form a tab layout. You must have encountered a random crash in your app. The crash log will look something like the following: </p>
 
-<pre><code class="language-scss">
+<pre>
+  <code class="language-scss" style="white-space: initial;">
     E/AndroidRuntime﹕ FATAL EXCEPTION: GLThread 9994
     java.lang.NullPointerException: Attempt to get length of null array
       at java.nio.DirectByteBuffer.put(DirectByteBuffer.java:385)
       at java.nio.ByteBufferAsIntBuffer.put(ByteBufferAsIntBuffer.java:160)
       at com.google.maps.api.android.lib6.gmm6.o.c.a.k.e(Unknown Source)
-</code></pre>
+  </code>
+</pre>
 
-<p>The crash also seems to happen randomly and not all the time. It might get triggered at a certain location or coordinates and you would end up scrathing your head, what's causing it. Apparently even Google is aware of this and the bug is being tracked <a href="https://code.google.com/p/gmaps-api-issues/issues/detail?id=5100#c34">here.</a> The bug has existed since the Lolipop days and still occurs on newer versions. I myself have faced the bug in Android Nougat and Pie.</p>
+<p>The crash also seems to happen randomly and not every time. It might get triggered at a certain location or coordinates and you would end up scrathing your head, what's causing it. Apparently even Google is aware of this and the bug is being tracked <a href="https://code.google.com/p/gmaps-api-issues/issues/detail?id=5100#c34">here.</a> The bug has existed since the Lolipop days and still occurs on newer versions. I myself have faced the bug nn Android Nougat and Pie.</p>
 
 <p>I have tried a number of solutions that have been listed on sites like StackOverflow but none of them seemed to help in my case. It was really frustrating to figure out if a solution did actually work, because at times I would thing the app has stopped crashing but on the 9th or 10th launch it would crash again. I started to think differently and instead of fixing the bug itself I thought of catching the crash? How did I do that? Well let's find out</p>
 
-<h2 id="the-bug:b39712958d960991129b3d3f48959e79">The Bug</h2>
-
 <h2 id="the-solution:b39712958d960991129b3d3f48959e79">The Solution</h2>
 
-<p>Most of the programmers will be familiar with the <code>try-catch</code> terminology. The <code>try</code> statement allows you to define a block of code to be tested for errors while it is being executed. And the <code>catch</code> statement allows you to define a block of code to be executed, if an error occurs in the try block. According to the crash log, the crash is due to a <code>NullPointerException</code> and it occurs on the <code>GLThread</code>. What we need to do is to override the default uncaught exception handler so that we can suppress crashing the app when this certain exception occurs. </p>
+<p>Most of the programmers will be familiar with the <code>try-catch</code> terminology. The <code>try</code> statement allows you to define a block of code to be tested for errors while it is being executed. And the <code>catch</code> statement allows you to define a block of code to be executed, if an error occurs in the try block. According to the crash log, the crash is due to a <code>NullPointerException</code> and it occurs on the <code>GLThread</code>. What we need to do is, to override the default uncaught exception handler so that we can suppress crashing the app when this certain exception occurs. </p>
 
 
-<blockquote>
-<p>This double-click situation happens only when an element inside the link changes from display none to another value of display on hover. An easy workaround is to use any other way of hiding/revealing this element (opacity, visibility, position…) instead of display none.</p>
-</blockquote>
+<p>So what you n <code>::after</code> pseudo element nested inside the <code>a</code> tag with <code>opacity: 0</code> and changed it to <code>opacity: 1</code> on hover.</p>
 
-<p>It worked. I hid the <code>::after</code> pseudo element nested inside the <code>a</code> tag with <code>opacity: 0</code> and changed it to <code>opacity: 1</code> on hover.</p>
+<p>We need to add the following block of code in the <codeo>onCreate</code> method of the activity in which the parent fragment for these map fragments resides:</p>
 
-<pre><code class="language-scss">a {
-  &amp;::after {
-    content: &quot; pseudo element&quot;;
-    opacity: 0;
-  }
+<pre>
+  <code class="language-scss" style="white-space: initial;">
+      final UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+    @Override
+    public void uncaughtException(Thread thread, Throwable ex) {
+        if (ex instanceof NullPointerException && thread.getName().startsWith("GLThread")) {
+            for (StackTraceElement stackTraceElement : ex.getStackTrace()) {
+                if (stackTraceElement.getClassName().contains("maps")) {
+                  Intent intent = new Intent("crash-broadcast");
+                  intent.putExtra("Map Crash", "Yes");
+                  LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
 
-  &amp;:hover {
-  &amp;::after {
-    opacity: 1;
-  }
-}
-</code></pre>
+                  return;
+                }
+            }
+        }
+        defaultHandler.uncaughtException(thread, ex);
+    }
+});
+  </code>
+</pre>
 
-<p>Now the tab links don&rsquo;t require a second click on iPhones and iPads and work just as intended with a singular click.</p>
+<p>Now when the exception will occur, you can control what to do. You must have noticed that I am using the broadcast manger to send a local broadcast. Stopping the app from crashing is only half the solution, we also need to re-draw or re-create the map fragments in order to make them usable. Since the crash occurs at the <code>GLThread</code> which is responsible for drawing the maps, you'll notice that the maps will look jittery or won't response at all. So we also need a way to re-initiate the maps.</p>
 
-          </article>
+<p>In the child fragments that are using the Google Maps fragment we can recieve the broadcast sent from the parent activity and do the following:</p>
+
+<pre>
+    <code class="language-scss" style="white-space: initial;">
+        private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+          @Override
+          public void onReceive(Context context, Intent intent) {
+            String mapCrash = intent.getStringExtra("Map Crash");
+
+            if(mapCrash != null) {
+              Fragment mapFragment = getChildFragmentManager().findFragmentById(R.id.fragmentFrameLayout);
+                if (mapFragment != null) {
+                    getChildFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentFrameLayout, SupportMapFragment.newInstance())
+                            .commit();
+             
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (map == null) {
+                                handler.postDelayed(this, 100);
+                            }
+                        }
+                    }, 100);
+                 }
+              }
+            }
+        };
+    </code>
+  </pre>
+
+  <p>This was my approach on tackling with this crash, let me know what you guys think and methods have you tried. Cheers</p>
+  
+</article>
 
         <!--  <div class="pagination">
             
@@ -184,28 +226,32 @@ if (!doNotTrack) {
               <a href="#">How to Remove Untracked Files from Git &raquo;</a>
             
           </div> -->
-        </section>
-        <br>
-        <section class="disqus">
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    (function() {
-      
-      
-      if (window.location.hostname == "localhost")
-        return;
-      var disqus_shortname = 'tomanistor';
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view comments powered by <a href="http://disqus.com/?ref_noscript">Disqus</a>.</noscript>
 </section>
+<br>
+    <section class="disqus">
+    <div id="disqus_thread"></div>
 
-      </section>
+    <script type="text/javascript">
+      (function() {
+          
+        if (window.location.hostname == "localhost")
+          return;
+        
+          var d = document, s = d.createElement('script');
+          s.src = 'https://hamzabinamin.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
 
-    </main>
+    </script>
+
+      
+      <noscript>Please enable JavaScript to view comments powered by <a href="http://disqus.com/?ref_noscript">Disqus</a>.</noscript>
+    </section>
+
+  </section>
+
+</main>
+
     <footer class="row middle-xs center-xs">
 
   
