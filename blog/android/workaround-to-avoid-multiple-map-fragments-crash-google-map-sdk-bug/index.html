@@ -152,15 +152,12 @@ if (!doNotTrack) {
 
 <p>Most of the programmers will be familiar with the <code>try-catch</code> terminology. The <code>try</code> statement allows you to define a block of code to be tested for errors while it is being executed. And the <code>catch</code> statement allows you to define a block of code to be executed, if an error occurs in the try block. According to the crash log, the crash is due to a <code>NullPointerException</code> and it occurs on the <code>GLThread</code>. What we need to do is, to override the default uncaught exception handler so that we can suppress crashing the app when this certain exception occurs. </p>
 
-
-<p>So what you n <code>::after</code> pseudo element nested inside the <code>a</code> tag with <code>opacity: 0</code> and changed it to <code>opacity: 1</code> on hover.</p>
-
 <p>We need to add the following block of code in the <codeo>onCreate</code> method of the activity in which the parent fragment for these map fragments resides:</p>
 
-<pre>
-  <code class="language-scss" style="white-space: initial;">
-      final UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+<pre style="white-space: initial;">
+  <code class="language-scss">
+  final UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+    Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         if (ex instanceof NullPointerException && thread.getName().startsWith("GLThread")) {
@@ -184,8 +181,8 @@ Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
 
 <p>In the child fragments that are using the Google Maps fragment we can recieve the broadcast sent from the parent activity and do the following:</p>
 
-<pre>
-    <code class="language-scss" style="white-space: initial;">
+<pre style="white-space: initial;">
+    <code class="language-scss">
         private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
           @Override
           public void onReceive(Context context, Intent intent) {
@@ -214,7 +211,7 @@ Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
     </code>
   </pre>
 
-  <p>This was my approach on tackling with this crash, let me know what you guys think and methods have you tried. Cheers</p>
+  <p>This was my approach on tackling with this crash, let me know what you guys think and which methods have you tried yourself. Cheers</p>
   
 </article>
 
