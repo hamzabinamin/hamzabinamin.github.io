@@ -144,9 +144,9 @@ if (!doNotTrack) {
   </code>
 </pre>
 
-<p>The crash also seems to happen randomly and not every time. It might get triggered at a certain location or coordinates and you would end up scrathing your head, what's causing it. Apparently even Google is aware of this and the bug is being tracked <a href="https://code.google.com/p/gmaps-api-issues/issues/detail?id=5100#c34">here.</a> The bug has existed since the Lolipop days and still occurs on newer versions. I myself have faced the bug nn Android Nougat and Pie.</p>
+<p>The crash also seems to happen randomly and not every time. It might get triggered at a certain location or coordinates and you would end up scrathing your head, what's causing it. Apparently even Google is aware of this and the bug is being tracked <a href="https://code.google.com/p/gmaps-api-issues/issues/detail?id=5100#c34">here.</a> The bug has existed since the Lollipop days and still occurs on newer versions. I myself have faced the bug on Android Nougat and Pie.</p>
 
-<p>I have tried a number of solutions that have been listed on sites like StackOverflow but none of them seemed to help in my case. It was really frustrating to figure out if a solution did actually work, because at times I would thing the app has stopped crashing but on the 9th or 10th launch it would crash again. I started to think differently and instead of fixing the bug itself I thought of catching the crash? How did I do that? Well let's find out</p>
+<p>I have tried a number of solutions that have been listed on sites like StackOverflow but none of them seemed to help in my case. It was really frustrating to figure out if a solution did actually work, because at times I would think the app has stopped crashing but on the 9th or 10th launch it would crash again. I started to think differently and instead of fixing the bug itself I thought of catching the crash? How did I do that? Well let's find out</p>
 
 <h2 id="the-solution:b39712958d960991129b3d3f48959e79">The Solution</h2>
 
@@ -177,7 +177,7 @@ if (!doNotTrack) {
   </code>
 </pre>
 
-<p>Now when the exception will occur, you can control what to do. You must have noticed that I am using the broadcast manger to send a local broadcast. Stopping the app from crashing is only half the solution, we also need to re-draw or re-create the map fragments in order to make them usable. Since the crash occurs at the <code>GLThread</code> which is responsible for drawing the maps, you'll notice that the maps will look jittery or won't response at all. So we also need a way to re-initiate the maps.</p>
+<p>Now when the exception will occur, you can control what to do. You must have noticed that I am using the broadcast manger to send a local broadcast. Stopping the app from crashing is only half the solution, we also need to re-draw or re-create the map fragments in order to make them usable. Since the crash occurs on the <code>GLThread</code> which is responsible for drawing the maps, you'll notice that the maps will look jittery or won't response at all. So we also need a way to re-initiate the maps.</p>
 
 <p>In the child fragments that are using the Google Maps fragment we can recieve the broadcast sent from the parent activity and do the following:</p>
 
