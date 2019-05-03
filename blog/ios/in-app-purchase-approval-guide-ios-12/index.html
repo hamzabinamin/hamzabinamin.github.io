@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  
+    
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T94X59P');</script>
+    
+  
+
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-70206008-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+  <title>Hamza B. Amin - iOS/Android Contractor</title>
+
+  <meta name="title" content="Hamza B. Amin - iOS/Android Contractor">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <meta name="generator" content="">
+  <base href="https://hamzabinamin.github.io">
+
+  
+    <meta name="description" content="Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug)">
+    <meta name="author" content="Hamza B. Amin">
+    <meta property="og:title" content="Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug)">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hamzabinamin.github.io">
+    <meta property="og:image" content="https://hamzabinamin.github.io/images/hamza-black.png">
+    <meta name="og:description" content="Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug)">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
+    <meta name="theme-color" content="#FFF">
+    <link rel="canonical" href="https://hamzabinamin.github.io/blog/fixing-the-ios-mobile-double-click-link-issue/">
+    <link rel="stylesheet" href="https://hamzabinamin.github.io/styles/main-f0fe55cc.min.css" type="text/css">
+    <style>nav{box-shadow:none;}</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="https://hamzabinamin.github.io/scripts/vendor/lazysizes.min.js" async></script>
+  
+</head>
+
+  <body>
+    
+  
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T94X59P"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+
+
+
+
+<nav class="row middle-xs center-xs">
+  
+ <!-- <div class="col-xs-6 col-sm-1 logo">
+    <a href="https://tomanistor.com#"><img data-src="https://tomanistor.com/images/logo/toma-nistor-logo.svg" class="lazyload" lazyload="on" alt="Toma Nistor - San Diego Web Developer"></a>
+  </div> -->
+    
+      <div class="col-xs-3 col-sm-2">
+        <h3><a href="https://hamzabinamin.github.io/#about">About</a></h3>
+      </div>
+    
+      <div class="col-xs-3 col-sm-2">
+        <h3><a href="https://hamzabinamin.github.io/#work">Work</a></h3>
+      </div>
+
+      <div class="col-xs-3 col-sm-2">
+        <h3><a href="https://hamzabinamin.github.io/resume.pdf">Resume</a></h3>
+      </div>
+    
+      <div class="col-xs-3 col-sm-2">
+        <h3><a href="https://hamzabinamin.github.io/#blog">Blog</a></h3>
+      </div>
+    
+      <div class="col-xs-3 col-sm-2">
+        <h3><a href="https://hamzabinamin.github.io/#contact">Contact</a></h3>
+      </div>
+    
+  <div class="col-xs-6 col-sm-1 nav-toggle">
+      <a href="" class="nav-icon" onclick="return false">
+        <img data-src="https://hamzabinamin.github.io/images/icon-menu.png" class="lazyload" lazyload="on" alt="Open Menu">
+        <img data-src="https://hamzabinamin.github.io/images/icon-x.png" class="lazyload" lazyload="on" alt="Close Menu" style="display: none;">
+      </a>
+  </div>
+</nav>
+
+<section class="nav-full row middle-xs center-xs">
+  <div class="col-xs-12">
+    <div class="row middle-xs center-xs">
+      
+        <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#about">About</a></h1></div>
+      
+        <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#work">Work</a></h1></div>
+
+        <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/resume.pdf">Resume</a></h1></div>
+
+        <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#blog">Blog</a></h1></div>
+      
+        <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#contact">Contact</a></h1></div>
+      
+    </div>
+  </div>
+</section>
+
+    <main>
+
+      <section class="container">
+        <section class="content">
+          <h1> Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug) </h1>
+
+          <div class="sub-header">
+            April 11, 2019 · 2 minute read
+          </div>
+
+          <article class="entry-content">
+            
+
+<p>If you have ever tried to place more than one map fragment in a view pager contained inside a parent fragment to form a tab layout. You must have encountered a random crash in your app. The crash log will look something like the following: </p>
+
+<pre style="white-space: initial;">
+  <code class="language-scss">
+    E/AndroidRuntime﹕ FATAL EXCEPTION: GLThread 9994
+    java.lang.NullPointerException: Attempt to get length of null array
+      at java.nio.DirectByteBuffer.put(DirectByteBuffer.java:385)
+      at java.nio.ByteBufferAsIntBuffer.put(ByteBufferAsIntBuffer.java:160)
+      at com.google.maps.api.android.lib6.gmm6.o.c.a.k.e(Unknown Source)
+  </code>
+</pre>
+
+<p>The crash also seems to happen randomly and not every time. It might get triggered at a certain location or coordinates and you would end up scratching your head, what's causing it. Apparently even Google is aware of this and the bug is being tracked <a href="https://code.google.com/p/gmaps-api-issues/issues/detail?id=5100#c34">here.</a> The bug has existed since the Lollipop days and still occurs on newer versions. I myself have faced the bug on Android Nougat and Pie.</p>
+
+<p>I have tried a number of solutions that have been listed on sites like StackOverflow but none of them seemed to help in my case. It was really frustrating to figure out if a solution did actually work, because at times I would think the app has stopped crashing but on the 9th or 10th launch it would crash again. I started to think differently and instead of fixing the bug itself I thought of catching the crash? How did I do that? Well let's find out</p>
+
+<h2 id="the-solution:b39712958d960991129b3d3f48959e79">The Solution</h2>
+
+<p>Most of the programmers will be familiar with the <code>try-catch</code> terminology. The <code>try</code> statement allows you to define a block of code to be tested for errors while it is being executed. And the <code>catch</code> statement allows you to define a block of code to be executed, if an error occurs in the try block. According to the crash log, the crash is due to a <code>NullPointerException</code> and it occurs on the <code>GLThread</code>. What we need to do is, to override the default uncaught exception handler so that we can suppress crashing the app when this certain exception occurs. </p>
+
+<p>We need to add the following block of code in the <codeo>onCreate</code> method of the activity in which the parent fragment for these map fragments resides:</p>
+
+<pre style="white-space: initial;">
+  <code class="language-scss">
+  final UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+    Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+    @Override
+    public void uncaughtException(Thread thread, Throwable ex) {
+        if (ex instanceof NullPointerException && thread.getName().startsWith("GLThread")) {
+            for (StackTraceElement stackTraceElement : ex.getStackTrace()) {
+                if (stackTraceElement.getClassName().contains("maps")) {
+                  Intent intent = new Intent("crash-broadcast");
+                  intent.putExtra("Map Crash", "Yes");
+                  LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
+
+                  return;
+                }
+            }
+        }
+        defaultHandler.uncaughtException(thread, ex);
+    }
+});
+  </code>
+</pre>
+
+<p>Now when the exception will occur, you can control what to do. You must have noticed that I am using the broadcast manger to send a local broadcast. Stopping the app from crashing is only half the solution, we also need to re-draw or re-create the map fragments in order to make them usable. Since the crash occurs on the <code>GLThread</code> which is responsible for drawing the maps, you'll notice that the maps will look jittery or won't response at all. So we also need a way to re-initiate the maps.</p>
+
+<p>In the child fragments that are using the Google Maps fragment we can recieve the broadcast sent from the parent activity and do the following:</p>
+
+<pre style="white-space: initial;">
+    <code class="language-scss">
+        private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+          @Override
+          public void onReceive(Context context, Intent intent) {
+            String mapCrash = intent.getStringExtra("Map Crash");
+
+            if(mapCrash != null) {
+              Fragment mapFragment = getChildFragmentManager().findFragmentById(R.id.fragmentFrameLayout);
+                if (mapFragment != null) {
+                    getChildFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentFrameLayout, SupportMapFragment.newInstance())
+                            .commit();
+             
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (map == null) {
+                                handler.postDelayed(this, 100);
+                            }
+                        }
+                    }, 100);
+                 }
+              }
+            }
+        };
+    </code>
+  </pre>
+
+  <p>This was my approach on tackling with this crash, let me know what you guys think and which methods have you tried yourself. Cheers</p>
+  
+</article>
+
+        <!--  <div class="pagination">
+            
+              <a href="#">&laquo; My Favorite Web Development Podcasts</a>
+            
+            
+              <a href="#">How to Remove Untracked Files from Git &raquo;</a>
+            
+          </div> -->
+</section>
+<br>
+    <section class="disqus">
+    <div id="disqus_thread"></div>
+
+    <script type="text/javascript">
+      (function() {
+          
+        if (window.location.hostname == "localhost")
+          return;
+        
+          var d = document, s = d.createElement('script');
+          s.src = 'https://hamzabinamin.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+
+      })();
+
+    </script>
+
+      
+      <noscript>Please enable JavaScript to view comments powered by <a href="http://disqus.com/?ref_noscript">Disqus</a>.</noscript>
+    </section>
+
+  </section>
+
+</main>
+
+    <footer class="row middle-xs center-xs">
+
+  
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://github.com/hamzabinamin">GitHub</a></div>
+  
+  
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/hamzabinamin/">LinkedIn</a></div>
+    
+        
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://www.facebook.com/hbafreelance/">Facebook</a></div>
+  
+        
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://www.instagram.com/hbafreelance/">Instagram</a></div>
+
+  
+</footer>
+
+    
+
+
+  
+  <script src="https://hamzabinamin.github.io/scripts/highlight.pack.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://hamzabinamin.github.io/scripts/main-c040f8f0.min.js" type="text/javascript"></script>
+
+
+  </body>
+</html>
