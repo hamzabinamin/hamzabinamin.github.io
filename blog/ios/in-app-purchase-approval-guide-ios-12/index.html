@@ -40,16 +40,16 @@ if (!doNotTrack) {
   <base href="https://hamzabinamin.github.io">
 
   
-    <meta name="description" content="Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug)">
+    <meta name="description" content="iOS - In App Purchase Approval Guide iOS 12">
     <meta name="author" content="Hamza B. Amin">
-    <meta property="og:title" content="Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug)">
+    <meta property="og:title" content="iOS - In App Purchase Approval Guide iOS 12">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hamzabinamin.github.io">
     <meta property="og:image" content="https://hamzabinamin.github.io/images/hamza-black.png">
-    <meta name="og:description" content="Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug)">
+    <meta name="og:description" content="iOS - In App Purchase Approval Guide iOS 12">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
     <meta name="theme-color" content="#FFF">
-    <link rel="canonical" href="https://hamzabinamin.github.io/blog/fixing-the-ios-mobile-double-click-link-issue/">
+    <link rel="canonical" href="https://hamzabinamin.github.io/blog/ios/in-app-purchase-approval-guide-ios-12/">
     <link rel="stylesheet" href="https://hamzabinamin.github.io/styles/main-f0fe55cc.min.css" type="text/css">
     <style>nav{box-shadow:none;}</style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
@@ -123,7 +123,7 @@ if (!doNotTrack) {
 
       <section class="container">
         <section class="content">
-          <h1> Android - Workaround to avoid Multiple Map Fragments Crash (Google's Map SDK Bug) </h1>
+          <h1> iOS - In App Purchase Approval Guide iOS 12 </h1>
 
           <div class="sub-header">
             April 11, 2019 · 2 minute read
@@ -132,86 +132,42 @@ if (!doNotTrack) {
           <article class="entry-content">
             
 
-<p>If you have ever tried to place more than one map fragment in a view pager contained inside a parent fragment to form a tab layout. You must have encountered a random crash in your app. The crash log will look something like the following: </p>
+<p>I recenly submitted my first in app purchased based app on the app store. It was quite a learning process not only in the coding phase but also in finding out what things are necessary in getting your in app purchase approved. Today I am going to share these points with all of you. </p>
+
+<p> 1. Your app needs to have a whole screen dedicated to the in app purchase section. That screen shhouldn't just be a purchase dialog but a full fledged view controller. That screen should describe the purchase clearly. The price, benefits that the users will get, duration of purchase (whether it's a subscription or a one time consumable purchase). </p>
+
+<p> 2. The same screen should also include some terms and conditions regarding the purchase. It is important that you also include a link to your own terms of use and privacy policy pages on your website. I can't stress enough how much important this point is. </p>
+
+<p> 3. Your text should look something like the following: </p>
 
 <pre style="white-space: initial;">
   <code class="language-scss">
-    E/AndroidRuntime﹕ FATAL EXCEPTION: GLThread 9994
-    java.lang.NullPointerException: Attempt to get length of null array
-      at java.nio.DirectByteBuffer.put(DirectByteBuffer.java:385)
-      at java.nio.ByteBufferAsIntBuffer.put(ByteBufferAsIntBuffer.java:160)
-      at com.google.maps.api.android.lib6.gmm6.o.c.a.k.e(Unknown Source)
+      Subscription price: *productPrice*
+      Description: *productDescription*
+      Trial duration: *productTrialDuration*
+      Subscription duration: *productDuration*
+      
+      Please read below about the auto-renewing subscription nature of this product: 
+      Payment will be charged to iTunes Account at confirmation of purchase 
+      Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period 
+      Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal 
+      Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase 
+      Any unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication, where applicable 
+      
+      
+      Terms of Use: *TermsOfServiceURL*
+      Privacy Policy: *PrivacyPolicyURL*
   </code>
 </pre>
 
-<p>The crash also seems to happen randomly and not every time. It might get triggered at a certain location or coordinates and you would end up scratching your head, what's causing it. Apparently even Google is aware of this and the bug is being tracked <a href="https://code.google.com/p/gmaps-api-issues/issues/detail?id=5100#c34">here.</a> The bug has existed since the Lollipop days and still occurs on newer versions. I myself have faced the bug on Android Nougat and Pie.</p>
+<p> 4. Make sure you also describe the in app purchase in your app description (the text that gets displayed on the app store). This text must also include the terms of purchase and the links to your terms of use and privacy policy. </p>
 
-<p>I have tried a number of solutions that have been listed on sites like StackOverflow but none of them seemed to help in my case. It was really frustrating to figure out if a solution did actually work, because at times I would think the app has stopped crashing but on the 9th or 10th launch it would crash again. I started to think differently and instead of fixing the bug itself I thought of catching the crash? How did I do that? Well let's find out</p>
+<p> 5. You also need to provide the login credentials for a test account that the review team can use to make a test purchase. These login credentials will be sperate from the ones that you provide in the review notes for your app login. </p>
+
 
 <h2 id="the-solution:b39712958d960991129b3d3f48959e79">The Solution</h2>
 
-<p>Most of the programmers will be familiar with the <code>try-catch</code> terminology. The <code>try</code> statement allows you to define a block of code to be tested for errors while it is being executed. And the <code>catch</code> statement allows you to define a block of code to be executed, if an error occurs in the try block. According to the crash log, the crash is due to a <code>NullPointerException</code> and it occurs on the <code>GLThread</code>. What we need to do is, to override the default uncaught exception handler so that we can suppress crashing the app when this certain exception occurs. </p>
-
-<p>We need to add the following block of code in the <codeo>onCreate</code> method of the activity in which the parent fragment for these map fragments resides:</p>
-
-<pre style="white-space: initial;">
-  <code class="language-scss">
-  final UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-    Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-    @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
-        if (ex instanceof NullPointerException && thread.getName().startsWith("GLThread")) {
-            for (StackTraceElement stackTraceElement : ex.getStackTrace()) {
-                if (stackTraceElement.getClassName().contains("maps")) {
-                  Intent intent = new Intent("crash-broadcast");
-                  intent.putExtra("Map Crash", "Yes");
-                  LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
-
-                  return;
-                }
-            }
-        }
-        defaultHandler.uncaughtException(thread, ex);
-    }
-});
-  </code>
-</pre>
-
-<p>Now when the exception will occur, you can control what to do. You must have noticed that I am using the broadcast manger to send a local broadcast. Stopping the app from crashing is only half the solution, we also need to re-draw or re-create the map fragments in order to make them usable. Since the crash occurs on the <code>GLThread</code> which is responsible for drawing the maps, you'll notice that the maps will look jittery or won't response at all. So we also need a way to re-initiate the maps.</p>
-
-<p>In the child fragments that are using the Google Maps fragment we can recieve the broadcast sent from the parent activity and do the following:</p>
-
-<pre style="white-space: initial;">
-    <code class="language-scss">
-        private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-          @Override
-          public void onReceive(Context context, Intent intent) {
-            String mapCrash = intent.getStringExtra("Map Crash");
-
-            if(mapCrash != null) {
-              Fragment mapFragment = getChildFragmentManager().findFragmentById(R.id.fragmentFrameLayout);
-                if (mapFragment != null) {
-                    getChildFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentFrameLayout, SupportMapFragment.newInstance())
-                            .commit();
-             
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (map == null) {
-                                handler.postDelayed(this, 100);
-                            }
-                        }
-                    }, 100);
-                 }
-              }
-            }
-        };
-    </code>
-  </pre>
-
-  <p>This was my approach on tackling with this crash, let me know what you guys think and which methods have you tried yourself. Cheers</p>
+  <p>Let me know down in the comments, what sort of problems did you face when you submitted your first in app purchase.</p>
   
 </article>
 
