@@ -142,11 +142,11 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
 
     int buttonWidth;
     private RecyclerView recyclerView;
-    private List<MyButton> buttonList;
+    private List&lt;MyButton&gt; buttonList;
     private GestureDetector gestureDetector;
     private int swipePosition = -1;
     private float swipeThreshold = 0.5f;
-    private Map<Integer, List<MyButton>> buttonBuffer;
+    private Map<//Integer, List<//MyButton>> buttonBuffer;
     private Queue<Integer> removeQueue;
 
     private GestureDetector.SimpleOnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
@@ -374,8 +374,6 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
 
 <p>Now we will look at how we can integrate the <code>SwipeHelper</code> class with our recyclerview.</p>
 
-<p>We need to add the following block of code in the <codeo>onCreate</code> method of the activity in which the parent fragment for these map fragments resides:</p>
-
 <pre style="white-space: initial;">
   <code class="language-scss">
   swipeHelper = new SwipeHelper(getContext(), recyclerView, 250) {
@@ -404,7 +402,7 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
   </code>
 </pre>
 
-<p>We create the two buttons using preferred drawables and background colors, call the respective functions in our adapter class. If for example after editing a row item you'd like to close the swwipe, you can do something like the following:</p>
+<p>We create the two buttons using preferred drawables and background colors, call the respective functions in our adapter class. If for example after editing a row item you'd like to close the swipe, you can do something like the following:</p>
 
 <pre style="white-space: initial;">
     <code class="language-scss">
