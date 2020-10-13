@@ -69,10 +69,6 @@ if (!doNotTrack) {
 
 <nav class="row middle-xs center-xs">
   
- <!-- <div class="col-xs-6 col-sm-1 logo">
-    <a href="https://tomanistor.com#"><img data-src="https://tomanistor.com/images/logo/toma-nistor-logo.svg" class="lazyload" lazyload="on" alt="Toma Nistor - San Diego Web Developer"></a>
-  </div> -->
-    
       <div class="col-xs-3 col-sm-2">
         <h3><a href="https://hamzabinamin.github.io/#about">About</a></h3>
       </div>
@@ -134,7 +130,7 @@ if (!doNotTrack) {
 
 <p>I recently had to add swipe mechanism to a <code>RecyclerView</code>. We were working with two options. One was to edit a row item and the other was to delete that item. This guide will cover both these options and the best thing is you won't have to use any external libraries.</p>
 
-<p>The main class that we'd be dealing with today is the <code>ItemTouchHelper</code> class. This class is resposible for adding swipe and drag & drop suupport to <code>RecyclerView</code>.</p>
+<p>The main class that we'd be dealing with today is the <code>ItemTouchHelper</code> class. This class is resposible for adding swipe and drag & drop support to <code>RecyclerView</code>.</p>
 
 <h2 id="the-solution:b39712958d960991129b3d3f48959e79">SwipeHelper</h2>
 
@@ -250,11 +246,10 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
 
         public boolean onClick(float x, float y)  {
             if(clickRegion != null && clickRegion.contains(x, y)) {
-                Log.d("onClick true", "pos: " + pos + ", X: " + x + " ," + " Y: " + y);
                 listener.onClick(pos);
                 return true;
             }
-            Log.d("onClick false", "pos: " + pos + ", X: " + x + " ," + " Y: " + y);
+            
             return false;
         }
 
@@ -340,9 +335,9 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
             return;
         }
         if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            Log.d("onChildDraw", "ACTION_STATE_SWIPE");
+          
             if(dX < 0) {
-                Log.d("onChildDraw", "Inside dX < 0");
+                
                 List<MyButton> buffer = new ArrayList<>();
                 if(!buttonBuffer.containsKey(pos)) {
                     instantiateMyButton(viewHolder, buffer);
