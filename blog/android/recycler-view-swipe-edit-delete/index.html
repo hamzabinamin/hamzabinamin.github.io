@@ -263,8 +263,6 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
             float cHeight  = rectF.height();
             float cWidth = rectF.width();
             p.setTextAlign(Paint.Align.LEFT);
-            float x = 0, y = 0;
-            
            
             Drawable d = ContextCompat.getDrawable(context, imageResId);
             Bitmap bitmap = drawableToBitmap(d);
@@ -272,8 +270,7 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
             float bw = bitmap.getWidth()/2;
             float bh = bitmap.getHeight()/2;
             c.drawBitmap(bitmap, ((rectF.left+rectF.right)/2)-bw, ((rectF.top+rectF.bottom)/2 - bh), p);
-        }
-
+        
             clickRegion =  rectF;
             this.pos = pos;
         }
@@ -376,7 +373,7 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
 
 <pre style="white-space: initial;">
   <code class="language-scss">
-  swipeHelper = new SwipeHelper(getContext(), recyclerView, 250) {
+  SwipeHelper swipeHelper = new SwipeHelper(getContext(), recyclerView, 250) {
       @Override
       public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buffer) {
           
