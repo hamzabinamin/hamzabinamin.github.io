@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2CMC6CXZZ4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2CMC6CXZZ4');
+    </script>
+  
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T94X59P');</script>
+    
+    
+    <script type="application/javascript">
+    var doNotTrack = false;
+    if (!doNotTrack) {
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-70206008-1', 'auto');
+      
+      ga('send', 'pageview');
+    }
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    <title>Parse - How to Upload Files Greater than 1MB on Parse Server</title>
+    <meta name="title" content="Parse - How to Upload Files Greater than 1MB on Parse Server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="generator" content="">
+    <base href="https://hamzabinamin.github.io">
+    <meta name="description" content="iOS - In App Purchase Approval Guide iOS 17">
+    <meta name="author" content="Hamza B. Amin">
+    <meta property="og:title" content="iOS - In App Purchase Approval Guide iOS 17">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hamzabinamin.github.io">
+    <meta property="og:image" content="https://hamzabinamin.github.io/images/hamza-black.png">
+    <meta name="og:description" content="Parse - How to Upload Files Greater than 1MB on Parse Server">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
+    <meta name="theme-color" content="#FFF">
+    <link rel="canonical" href="https://hamzabinamin.github.io/blog/web/parse/how-to-upload-files-greater-than-1mb-on-parse-server/">
+    <link rel="stylesheet" href="https://hamzabinamin.github.io/styles/main-f0fe55cc.min.css" type="text/css">
+    <style>nav{box-shadow:none;}</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="https://hamzabinamin.github.io/scripts/vendor/lazysizes.min.js" async></script>
+
+  </head>
+
+  <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T94X59P"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+    <nav class="row middle-xs center-xs">
+    <!-- <div class="col-xs-6 col-sm-1 logo">
+        <a href="https://tomanistor.com#"><img data-src="https://tomanistor.com/images/logo/toma-nistor-logo.svg" class="lazyload" lazyload="on" alt="Toma Nistor - San Diego Web Developer"></a>
+      </div> -->
+        
+          <div class="col-xs-3 col-sm-2">
+            <h3><a href="https://hamzabinamin.github.io/#about">About</a></h3>
+          </div>
+        
+          <div class="col-xs-3 col-sm-2">
+            <h3><a href="https://hamzabinamin.github.io/#work">Work</a></h3>
+          </div>
+
+        <!--  <div class="col-xs-3 col-sm-2">
+            <h3><a href="https://hamzabinamin.github.io/resume.pdf">Resume</a></h3>
+          </div> -->
+        
+          <div class="col-xs-3 col-sm-2">
+            <h3><a href="https://hamzabinamin.github.io/#blog">Blog</a></h3>
+          </div>
+        
+          <div class="col-xs-3 col-sm-2">
+            <h3><a href="https://hamzabinamin.github.io/#contact">Contact</a></h3>
+          </div>
+        
+      <div class="col-xs-6 col-sm-1 nav-toggle">
+          <a href="" class="nav-icon" onclick="return false">
+            <img data-src="https://hamzabinamin.github.io/images/icon-menu.png" class="lazyload" lazyload="on" alt="Open Menu">
+            <img data-src="https://hamzabinamin.github.io/images/icon-x.png" class="lazyload" lazyload="on" alt="Close Menu" style="display: none;">
+          </a>
+      </div>
+    </nav>
+
+    <section class="nav-full row middle-xs center-xs">
+      <div class="col-xs-12">
+        <div class="row middle-xs center-xs">
+          
+            <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#about">About</a></h1></div>
+          
+            <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#work">Work</a></h1></div>
+
+          <!-- <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/resume.pdf">Resume</a></h1></div> -->
+
+            <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#blog">Blog</a></h1></div>
+          
+            <div class="col-xs-12"><h1><a href="https://hamzabinamin.github.io/#contact">Contact</a></h1></div>
+          
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="container">
+        <section class="content">
+          <h1> Parse - How to Upload Files Greater than 1MB on Parse Server </h1>
+
+          <div class="sub-header">
+            April 26, 2024 · 2 minute read
+          </div>
+
+          <article class="entry-content">
+            <p> If you're familiar with Elastic Beanstalk and Parse Server, you would have noticed that by default you can't upload files greater than 1000KB in size. This is because, NGINX has a limit of 1MB on file uploads. If the request size goes beyond the configured value, then the 413 Request Entity Too Large error is returned. In order to upload files larger than 1 MB, we need to configure the <code>client_max_body_size directive</code> in the NGINX configuration files. </p>
+
+            <h2 id="the-solution:b39712958d960991129b3d3f48959e79"> Solution</h2>
+
+            <p> 1. To extend the Elastic Beanstalk default NGINX configuration, add the .conf configuration file <code>client_max_body_size.conf</code> that includes the following: </p>
+
+            <pre style="white-space: initial;">
+              <code class="language-scss" style="white-space: pre-line;">
+                client_max_body_size 50M;
+              </code>
+            </pre>
+
+            You can use any value of your choice, for myrequirement 50MB was enough.
+
+            <p> 2. Copy the .conf configuration file <code>client_max_body_size.conf</code> to a folder named <code>.platform/nginx/conf.d/</code> in your application source bundle. The Elastic Beanstalk NGINX configuration includes .conf files in this folder automatically. Make sure to create this path if it doesn't exist in your source bundle. </p>
+
+            Your path should look something like this <code>my-app/.platform/nginx/conf.d/client_max_body_size.conf</code>.
+
+            <p> Now you can deploy your code and test the new version in your Elastic Beanstalk environment. </p>
+          </article>
+        </section>
+        <br>
+        <section class="disqus">
+          <div id="disqus_thread"></div>
+
+          <script type="text/javascript">
+            (function() {
+                
+              if (window.location.hostname == "localhost")
+                return;
+              
+                var d = document, s = d.createElement('script');
+                s.src = 'https://hamzabinamin.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+            })();
+
+          </script>
+
+          
+          <noscript>Please enable JavaScript to view comments powered by <a href="http://disqus.com/?ref_noscript">Disqus</a>.</noscript>
+        </section>
+      </section>
+    </main>
+
+    <footer class="row middle-xs center-xs">
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://github.com/hamzabinamin">GitHub</a></div>
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/hamzabinamin/">LinkedIn</a></div>    
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://www.facebook.com/hbafreelance/">Facebook</a></div>
+      <div class="col-xs-3 col-md-2"><a target="_blank" rel="noopener" href="https://www.instagram.com/hbafreelance/">Instagram</a></div>
+    </footer>
+ 
+    <script src="https://hamzabinamin.github.io/scripts/highlight.pack.js"></script>    
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://hamzabinamin.github.io/scripts/main-c040f8f0.min.js" type="text/javascript"></script>
+
+  </body>
+</html>
